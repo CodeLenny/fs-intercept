@@ -1,0 +1,19 @@
+{
+  "name": "fs-intercept",
+  "version": "0.0.0",
+  "description": "Intercepts file reads.",
+  "main": "FSReadInterceptor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeLenny/fs-intercept.git"
+  },
+  "author": "Ryan Leonard (http://ryanleonard.us)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CodeLenny/fs-intercept/issues"
+  },
+  "homepage": "https://github.com/CodeLenny/fs-intercept#readme"
+}
