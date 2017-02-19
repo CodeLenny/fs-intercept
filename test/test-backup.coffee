@@ -24,6 +24,11 @@ describe "FSReadInterceptor.backup", ->
   afterEach ->
     restoreFS()
 
-  it "stores the global 'readFile'", ->
+  it "stores the global `readFile`", ->
     interceptor = new FSReadInterceptor()
+    interceptor.backup.readFile.should.equal fsBackup.readFile
+
+  it "persists even if `fs` changed", ->
+    interceptor = new FSReadInterceptor()
+    require("fs").readFile = null
     interceptor.backup.readFile.should.equal fsBackup.readFile
