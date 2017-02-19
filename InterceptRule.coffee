@@ -1,3 +1,6 @@
+stream = require "stream"
+Async2TransformStream = require "./stream-utils/Async2TransformStream"
+
 ###
 Describes a pattern of files to intercept.
 ###
@@ -44,5 +47,47 @@ class InterceptRule
   @param {Function} callback `(err, data)`
   ###
   readFileAlways: (file, options, data, callback) -> cb null, data
+
+  ###
+  A replacement `fs.createReadStream` to return when files are intercepted.
+  By default, wraps `this.readFile` in a Stream.  Can be overridden to use proper Streams for better preformance.
+  @param {String, Buffer} path
+  @param {Object} options
+  @option options {String} flags
+  @option options {String} encoding
+  @option options {Integer} fd
+  @option options {Integer} mode
+  @option options {Boolean} autoClose
+  @option options {Integer} start
+  @option options {Integer} end
+  @return {ReadStream}
+  ###
+  createReadStream: (path, options) ->
+    s = new stream.Readable()
+    s._read = ->
+    @readFile path, options, (err, data) ->
+      return s.emit "error", err if err
+      s.push data
+      s.push null
+    return s
+
+  ###
+  If {InterceptRule#interceptSuccess} is `true`, `createReadStreamAlways` is called after a successful stream creation.
+  By default, wraps `this.readFileAlways` in a Stream.  Can be overridden to use proper Streams for better performance.
+
+  If errors occur while calling `this.readFileAlways`, the input is passed along without modifications.
+  @param {String, Buffer} path
+  @param {Object} options
+  @option options {String} flags
+  @option options {String} encoding
+  @option options {Integer} fd
+  @option options {Integer} mode
+  @option options {Boolean} autoClose
+  @option options {Integer} start
+  @option options {Integer} end
+  @return {TransformStream}
+  ###
+  createReadStreamAlways: (path, options) ->
+    new Async2TransformStream (file, cb) => @readFileAlways path, options, file, cb
 
 module.exports = InterceptRule

@@ -13,7 +13,7 @@ class CoffeeScriptInterceptor extends InterceptorRule
     require("fs").stat (file.replace ".js", ".coffee"), cb
 
   readFile: (file, options, cb) ->
-    require("fs").readFile (file.replace ".js", ".coffee"), options, (err, data) ->
+    require("fs").readFile (file.replace ".js", ".coffee"), "utf8", (err, data) ->
       return cb err if err
       cb null, require("coffee-script").compile data
 
