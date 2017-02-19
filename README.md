@@ -9,7 +9,7 @@ single file, this library adds precompilation steps when files are read.
 The same rules can also be applied to files served by [serve-static][], replacing compilation middleware.
 
 :warning: Read Interceptor is only intended to be used during development and compilation.  See the
-[Limitations](#dangerous-limitations) for more information.
+[Limitations](#limitations) for more information.
 
 ## Basic Usage
 
