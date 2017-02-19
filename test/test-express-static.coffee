@@ -44,7 +44,7 @@ describe "Integration: express.static()", ->
         res.should.have.status 200
         res.text.should.include "JavaScript"
 
-  it.skip "should serve compiled CoffeeScript files", ->
+  it "should serve compiled CoffeeScript files", ->
     chai
       .request app
       .get "/test2.js"
