@@ -4,7 +4,7 @@
   "description": "Intercepts file reads.",
   "main": "FSReadInterceptor.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --compilers coffee:coffee-script/register"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/CodeLenny/fs-intercept/issues"
   },
-  "homepage": "https://github.com/CodeLenny/fs-intercept#readme"
+  "homepage": "https://github.com/CodeLenny/fs-intercept#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coffee-script": "^1.12.3",
+    "decache": "^4.1.0",
+    "mocha": "^3.2.0"
+  }
 }
