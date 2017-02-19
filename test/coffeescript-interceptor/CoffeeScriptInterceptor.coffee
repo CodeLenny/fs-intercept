@@ -7,7 +7,7 @@ File read interceptor that compiles the matching CoffeeScript file when JavaScri
 ###
 class CoffeeScriptInterceptor extends InterceptorRule
 
-  intercept: (file) -> path.extname(file) is ".js"
+  intercept: (method, [file]) -> path.extname(file) is ".js"
 
   stat: (file, cb) ->
     require("fs").stat (file.replace ".js", ".coffee"), cb

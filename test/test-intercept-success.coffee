@@ -47,7 +47,7 @@ describe "interceptSuccess", ->
         interceptSuccess: yes
         readFile: ->
           should.fail "readFile shouldn't be called if file found"
-        readFileAlways: (data, file, options, cb) ->
+        readFileAlways: (file, options, data, cb) ->
           called = yes
           cb null, data
 
@@ -68,7 +68,7 @@ describe "interceptSuccess", ->
           alwaysCalled.should.equal no
           readCalled = yes
           cb null, "DATA"
-        readFileAlways: (data, file, options, cb) ->
+        readFileAlways: (file, options, data, cb) ->
           readCalled.should.equal yes
           data.should.equal "DATA"
           alwaysCalled = yes
