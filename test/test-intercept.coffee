@@ -1,8 +1,6 @@
 chai = require "chai"
 should = chai.should()
 
-CoffeeScriptInterceptor = require "./coffeescript-interceptor/CoffeeScriptInterceptor"
-
 decache = require "decache"
 {fsBackup, restoreFS} = require "./utils"
 
