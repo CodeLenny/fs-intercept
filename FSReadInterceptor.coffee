@@ -54,6 +54,7 @@ class FSReadInterceptor
   @param {Object, String} options the options passed
   @option options {String, Null} encoding
   @option options {String} flag
+  @option {Function} cb
   ###
   interceptedReadFile: (file, options, cb) =>
     [cb, options] = [options] unless cb
