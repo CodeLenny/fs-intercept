@@ -8,7 +8,7 @@ fsBackup = Object.assign {}, require "fs"
 restoreFS = ->
   for own k, v of fsBackup
     try
-      Object.assign require("fs").k = v
+      require("fs")[k] = v
     catch err
       yes
 
@@ -23,6 +23,8 @@ describe "FSReadInterceptor.backup", ->
 
   afterEach ->
     restoreFS()
+    require("fs").readFile.should.be.a.function
+    require("fs").readFile.should.equal fsBackup.readFile
 
   it "stores the global `readFile`", ->
     interceptor = new FSReadInterceptor()

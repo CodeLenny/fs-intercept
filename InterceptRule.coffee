@@ -4,10 +4,10 @@ Describes a pattern of files to intercept.
 class InterceptRule
 
   ###
-  @property {Boolean} If `false`, this rule is only checked when a file is failed to be read.  If `true`, intercept rule
-    is run all file reads, even if the file exists.
+  @property {Boolean} If `false`, this rule is only checked when a file fails to be read.  If `true`, the intercept is
+  checked even after a file is successfully found.
   ###
-  interceptAll: no
+  interceptSuccess: no
 
   ###
   Determine if the given file should be intercepted by this rule.
@@ -28,5 +28,15 @@ class InterceptRule
   @param {Function} callback `(err, data)`
   ###
   readFile: (path, options, callback) -> yes
+
+  ###
+  If {InterceptRule#interceptSuccess} is `true`, `readFileAlways` is called after a successful read.
+  @param {String, Buffer} data the contents of the file
+  @param {Object, String} options the options passed
+  @option options {String, Null} encoding
+  @option options {String} flag
+  @param {Function} callback `(err, data)`
+  ###
+  readFileAlways: (data, options, callback) -> cb null, data
 
 module.exports = InterceptRule
