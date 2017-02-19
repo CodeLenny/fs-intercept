@@ -1,6 +1,3 @@
-stream = require "stream"
-Async2TransformStream = require "./stream-utils/Async2TransformStream"
-
 ###
 Describes a pattern of files to intercept.
 ###
@@ -29,6 +26,20 @@ class InterceptRule
   @param {Function} callback `(err, data)`
   ###
   readFile: (file, options, callback) -> callback new TypeError "InterceptRule hasn't defined a 'readFile' method."
+
+  ###
+  A replacement `fs.readFileSync` to run on intercepted files.
+  By default, wraps `this.readFile` in a `"deasync"` call.  Re-implement with proper syncronous methods to improve
+  preformance.
+  @param {String, Buffer, Integer} file the file path requested
+  @param {Object, String} options the options passed
+  @option options {String, Null} encoding
+  @option options {String} flag
+  ###
+  readFileSync: (file, options) ->
+    deasync = require("deasync")
+    readFile = deasync @readFile
+    readFile file, options
 
   ###
   A replacement `fs.stat` to return when files are intercepted.
@@ -63,6 +74,7 @@ class InterceptRule
   @return {ReadStream}
   ###
   createReadStream: (path, options) ->
+    stream = require "stream"
     s = new stream.Readable()
     s._read = ->
     @readFile path, options, (err, data) ->
@@ -88,6 +100,7 @@ class InterceptRule
   @return {TransformStream}
   ###
   createReadStreamAlways: (path, options) ->
+    Async2TransformStream = require "./stream-utils/Async2TransformStream"
     new Async2TransformStream (file, cb) => @readFileAlways path, options, file, cb
 
 module.exports = InterceptRule

@@ -52,7 +52,7 @@ Now `fs.readFile("src.js");` will compile `src.coffee` if `src.js` isn't found. 
 
 ### Implemented Methods
 
-- `fs.readFile`
+- `fs.readFile`, `fs.readFileSync`
 - `fs.stat`
 - `fs.createReadStream`
 

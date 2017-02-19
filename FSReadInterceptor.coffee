@@ -24,6 +24,7 @@ class FSReadInterceptor
     @intercepts ?= []
     @backup ?= {}
     @backup.readFile ?= require("fs").readFile
+    @backup.readFileSync ?= require("fs").readFileSync
     @backup.stat ?= require("fs").stat
     @backup.createReadStream ?= require("fs").createReadStream
 
@@ -42,6 +43,7 @@ class FSReadInterceptor
   ###
   intercept: ->
     require("fs").readFile = @interceptedReadFile
+    require("fs").readFileSync = @interceptedReadFileSync
     require("fs").stat = @interceptedStat
     require("fs").createReadStream = @interceptedCreateReadStream
     @
@@ -52,6 +54,7 @@ class FSReadInterceptor
   ###
   bypass: ->
     require("fs").readFile = @backup.readFile
+    require("fs").readFileSync = @backup.readFileSync
     require("fs").stat = @backup.stat
     require("fs").createReadStream = @backup.createReadStream
     @
@@ -167,6 +170,13 @@ class FSReadInterceptor
   ###
   interceptedReadFile: (opts..., cb) =>
     @interceptedCall "readFile", opts, {always: yes}, cb
+
+  ###
+  Intercepts a `readFileSync`.
+  @param {Array<Any>} opts the options passed to `fs.readFileSync`.
+  ###
+  interceptedReadFileSync: (opts...) =>
+    @interceptedCallSync "readFileSync", opts, {always: yes}
 
   ###
   Intercepts a `stat`.

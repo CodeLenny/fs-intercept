@@ -18,7 +18,7 @@ describe "FSReadInterceptor#intercept", ->
     require("fs").readFile.should.equal fsBackup.readFile
     restoreFS()
 
-  for property in ["readFile", "stat"]
+  for property in ["readFile", "stat", "createReadStream", "readFileSync"]
     do (property) ->
       it "should replace fs.#{property}", ->
         require("fs")[property].should.equal fsBackup[property]
