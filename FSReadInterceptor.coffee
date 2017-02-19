@@ -32,7 +32,9 @@ class FSReadInterceptor
   @param {InterceptRule} rule the rule to add
   @return {FSReadInterceptor} for chaining
   ###
-  use: (rule) -> @intercepts.push rule
+  use: (rule) ->
+    @intercepts.push rule
+    @
 
   ###
   Starts intercepting file reads.
