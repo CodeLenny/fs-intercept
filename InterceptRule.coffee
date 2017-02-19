@@ -21,13 +21,13 @@ class InterceptRule
 
   ###
   A replacement `fs.readFile` to run on intercepted files.
-  @param {String, Buffer, Integer} path the file path requested
+  @param {String, Buffer, Integer} file the file path requested
   @param {Object, String} options the options passed
   @option options {String, Null} encoding
   @option options {String} flag
   @param {Function} callback `(err, data)`
   ###
-  readFile: (path, options, callback) -> yes
+  readFile: (file, options, callback) -> yes
 
   ###
   A replacement `fs.stat` to return when files are intercepted.
@@ -39,11 +39,12 @@ class InterceptRule
   ###
   If {InterceptRule#interceptSuccess} is `true`, `readFileAlways` is called after a successful read.
   @param {String, Buffer} data the contents of the file
+  @param {String, Buffer, Integer} file the original file path requested
   @param {Object, String} options the options passed
   @option options {String, Null} encoding
   @option options {String} flag
   @param {Function} callback `(err, data)`
   ###
-  readFileAlways: (data, options, callback) -> cb null, data
+  readFileAlways: (data, file, options, callback) -> cb null, data
 
 module.exports = InterceptRule
