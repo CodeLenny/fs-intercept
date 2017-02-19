@@ -27,7 +27,7 @@ class InterceptRule
   @option options {String} flag
   @param {Function} callback `(err, data)`
   ###
-  readFile: (file, options, callback) -> yes
+  readFile: (file, options, callback) -> callback new TypeError "InterceptRule hasn't defined a 'readFile' method."
 
   ###
   A replacement `fs.stat` to return when files are intercepted.
