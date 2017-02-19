@@ -21,6 +21,7 @@ class FSReadInterceptor
     @intercepts ?= []
     @backup ?= {}
     @backup.readFile ?= require("fs").readFile
+    @backup.stat ?= require("fs").stat
 
   ###
   Add a new {InterceptRule}.
@@ -35,6 +36,7 @@ class FSReadInterceptor
   ###
   intercept: ->
     require("fs").readFile = @interceptedReadFile
+    require("fs").stat = @interceptedStat
     @
 
   ###
@@ -43,6 +45,7 @@ class FSReadInterceptor
   ###
   bypass: ->
     require("fs").readFile = @backup.readFile
+    require("fs").stat = @backup.stat
     @
 
   ###
@@ -73,5 +76,23 @@ class FSReadInterceptor
           return cb err if err
           runAlways data, cb
       runAlways data, cb
+
+  ###
+  Intercepts a `stat`.
+  @param {String, Buffer} path the file path requested
+  @param {Function} cb given `(err, stats)`.
+  ###
+  interceptedStat: (path, cb) =>
+    onFailure = @intercepts.filter (intercept) -> intercept.intercept path, {}
+    statBackup = (err, cb) ->
+      return cb err if onFailure.length < 1
+      intercept = onFailure.pop()
+      intercept.stat path, (_err, stats) ->
+        return statBackup err, cb if _err
+        cb null, stats
+    @backup.stat path, (err, data) ->
+      if err
+        return statBackup err, cb
+      cb err, data
 
 module.exports = FSReadInterceptor

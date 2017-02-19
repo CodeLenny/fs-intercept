@@ -30,6 +30,13 @@ class InterceptRule
   readFile: (path, options, callback) -> yes
 
   ###
+  A replacement `fs.stat` to return when files are intercepted.
+  @param {String, Buffer} path
+  @param {Function} callback `(err, stats)`
+  ###
+  stat: (path, callback) -> callback new TypeError "InterceptRule hasn't defined a 'stats' method."
+
+  ###
   If {InterceptRule#interceptSuccess} is `true`, `readFileAlways` is called after a successful read.
   @param {String, Buffer} data the contents of the file
   @param {Object, String} options the options passed

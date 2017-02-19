@@ -30,6 +30,10 @@ describe "FSReadInterceptor.backup", ->
     interceptor = new FSReadInterceptor()
     interceptor.backup.readFile.should.equal fsBackup.readFile
 
+  it "stores the global `stat`", ->
+    interceptor = new FSReadInterceptor()
+    interceptor.backup.stat.should.equal fsBackup.stat
+
   it "persists even if `fs` changed", ->
     interceptor = new FSReadInterceptor()
     require("fs").readFile = null
