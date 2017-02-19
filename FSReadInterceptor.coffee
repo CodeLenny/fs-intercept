@@ -16,6 +16,8 @@ class FSReadInterceptor
   ###
   backup: null
 
+  methods: ["readFile", "readFileSync", "stat", "createReadStream"]
+
   ###
   @param {Object} opts overrides any local parameters.
   ###
@@ -23,10 +25,8 @@ class FSReadInterceptor
     Object.assign @, opts
     @intercepts ?= []
     @backup ?= {}
-    @backup.readFile ?= require("fs").readFile
-    @backup.readFileSync ?= require("fs").readFileSync
-    @backup.stat ?= require("fs").stat
-    @backup.createReadStream ?= require("fs").createReadStream
+    for method in @methods
+      @backup[method] ?= require("fs")[method]
 
   ###
   Add a new {InterceptRule}.
@@ -53,10 +53,8 @@ class FSReadInterceptor
   @return {FSReadInterceptor} for chaining.
   ###
   bypass: ->
-    require("fs").readFile = @backup.readFile
-    require("fs").readFileSync = @backup.readFileSync
-    require("fs").stat = @backup.stat
-    require("fs").createReadStream = @backup.createReadStream
+    for method in @methods
+      require("fs")[method] = @backup[method]
     @
 
   ###
