@@ -112,27 +112,23 @@ class FSReadInterceptor
   interceptedCallSync: (method, params, opts) ->
     onFailure = @intercepts.filter (intercept) -> intercept.intercept method, params
     always = if opts.always then onFailure.filter (intercept) -> intercept.interceptSuccess else []
-    failureBackup = (err) ->
-      throw err if onFailure.length < 1
-      intercept = onFailure.pop()
-      try
-        return intercept[method] params...
-      catch error
-        failureBackup err
-    runAlways = (out) ->
-      return out if always.length < 1
-      intercept = always.pop()
-      try
-        return runAlways intercept["#{method}Always"] params..., out
-      catch error
-        runAlways params..., out
-    output = null
+
+    data = null
     try
-      output = @backup[method] params...
+      data = @backup[method] params...
     catch error
-      output = failureBackup error
-    if opts.always then output = runAlways output
-    return output
+      for intercept in onFailure
+        try
+          data = intercept[method] params...
+        break if data
+      throw error unless data
+
+    if opts.always
+      for intercept of always
+        try
+          data = intercept[method] params..., data
+
+    return data
 
   ###
   Abstract method to intercept `fs` calls returning Streams.

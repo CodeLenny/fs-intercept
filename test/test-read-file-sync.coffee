@@ -28,3 +28,6 @@ describe "automatic readFileSync", ->
     js.should.include "CoffeeScript"
     js.should.include "/*"
     js.should.not.include "#"
+
+  it "should throw error if file isn't found", ->
+    (-> require("fs").readFileSync "#{__dirname}/coffeescript-interceptor/invalid.js", "utf8").should.throw()
