@@ -124,7 +124,7 @@ class FSReadInterceptor
       throw error unless data
 
     if opts.always
-      for intercept of always
+      for intercept in always
         try
           data = intercept[method] params..., data
 
