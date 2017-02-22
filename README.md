@@ -23,7 +23,7 @@ Define or import `InterceptRule`s.
 
 ```js
 "use strict";
-var InterceptRule = require("fs-intercept/InterceptRule");
+const InterceptRule = require("fs-intercept/InterceptRule");
 class CoffeeScriptIntercept extends InterceptRule {
   
   intercept(path) { return path.indexOf(".js") > -1; }
