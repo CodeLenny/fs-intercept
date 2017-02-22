@@ -49,6 +49,14 @@ class InterceptRule
   stat: (path, callback) -> callback new TypeError "InterceptRule hasn't defined a 'stats' method."
 
   ###
+  A replacement `fs.lstat` to return when files are intercepted.
+  By default, calls `this.stat`.
+  @param {String, Buffer} path
+  @param {Function} callback `(err, stats)`
+  ###
+  lstat: (args...) -> this.stat args...
+
+  ###
   If {InterceptRule#interceptSuccess} is `true`, `readFileAlways` is called after a successful read.
   @param {String, Buffer, Integer} file the original file path requested
   @param {Object, String} options the options passed

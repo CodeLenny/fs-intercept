@@ -16,7 +16,8 @@ class FSReadInterceptor
   ###
   backup: null
 
-  methods: ["readFile", "readFileSync", "stat", "createReadStream"]
+  methods: ["readFile", "readFileSync", "stat", "createReadStream", "lstat"]
+  #TODO: existsSync statSync realpath realpathSync lstatSync readdir readdirSync openSync
 
   ###
   @param {Object} opts overrides any local parameters.
@@ -46,6 +47,7 @@ class FSReadInterceptor
     require("fs").readFileSync = @interceptedReadFileSync
     require("fs").stat = @interceptedStat
     require("fs").createReadStream = @interceptedCreateReadStream
+    require("fs").lstat = @interceptedLStat
     @
 
   ###
@@ -179,6 +181,14 @@ class FSReadInterceptor
   ###
   interceptedStat: (opts..., cb) =>
     @interceptedCall "stat", opts, {}, cb
+
+  ###
+  Intercepts an `lstat`.
+  @param {Array<Any>} opts the options passed to `fs.stat`.
+  @param {Function} cb given `(err, stats)`.
+  ###
+  interceptedLStat: (opts..., cb) =>
+    @interceptedCall "lstat", opts, {}, cb
 
   ###
   Intercepts a `createReadStream`.
