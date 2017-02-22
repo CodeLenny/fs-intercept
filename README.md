@@ -53,20 +53,20 @@ Now `fs.readFile("src.js");` will compile `src.coffee` if `src.js` isn't found. 
 ### Implemented Methods
 
 - `fs.readFile`, `fs.readFileSync`
-- `fs.stat`
+- `fs.stat`, `fs.lstat`
 - `fs.createReadStream`
 
 ### Tested Environments
 
 - ![`express.static()` Tested][express-static-badge] [serve-static][]
-- ![`polymer-bundler` Planned][polymer-bundler-badge] [polymer-bundler][]
-- ![`browserify` Planned][browserify-badge] [Browserify][]
+- ![`polymer-bundler` Tested][polymer-bundler-badge] [polymer-bundler][]
+- ![`browserify` Tested][browserify-badge] [Browserify][]
 
 Please suggest additional environments to test, so they can be added to the automated testing suite.
 
 [express-static-badge]: https://img.shields.io/badge/express.static()-tested-brightgreen.svg?style=flat-square
-[polymer-bundler-badge]: https://img.shields.io/badge/polymer--bundler-planned-red.svg?style=flat-square
-[browserify-badge]: https://img.shields.io/badge/browserify-planned-red.svg?style=flat-square
+[polymer-bundler-badge]: https://img.shields.io/badge/polymer--bundler-tested-brightgreen.svg?style=flat-square
+[browserify-badge]: https://img.shields.io/badge/browserify-tested-brightgreen.svg?style=flat-square
 
 ## Limitations
 
