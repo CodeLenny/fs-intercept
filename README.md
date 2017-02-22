@@ -27,7 +27,10 @@ Define or import `InterceptRule`s.
 const InterceptRule = require("fs-intercept/InterceptRule");
 class CoffeeScriptIntercept extends InterceptRule {
   
-  intercept(path) { return path.indexOf(".js") > -1; }
+  intercept(method, params) {
+    const path = params[0];
+    return path.indexOf(".js") > -1;
+  }
   
   readFile(path, options, callback) {
     require("fs").readFile(path.replace(".js", ".coffee"), "utf8", function(err, cs) {
