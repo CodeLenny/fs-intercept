@@ -1,5 +1,6 @@
 # FS Read Interceptor
 [![Build Status](https://travis-ci.org/CodeLenny/fs-intercept.svg?branch=master)](https://travis-ci.org/CodeLenny/fs-intercept)
+[![npm](https://img.shields.io/npm/v/fs-intercept.svg)]()
 
 FS Read Interceptor automatically transforms files as they are read into your [Node.js][] script or application.
 
